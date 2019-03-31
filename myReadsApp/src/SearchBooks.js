@@ -17,28 +17,30 @@ class SearchBooks extends Component {
         books: []
       })
     } else {
-      BooksAPI.search(query)
-      .then(books => {
-        books.map(book => {
-          book.shelf = 'none',
-          this.props.booksOnShelf.forEach(bookOnShelf => {
-            book.id === bookOnShelf.id && (
-              book.shelf = bookOnShelf.shelf
-            )
-          })
-        })
-        this.setState({
-          books: books,
-          searchError: false
-        })
-      })
-      .catch(error => {
-        this.setState({
-          books: [],
-          searchError: true
-        })
-        console.log(this.state.searchError)
-      })
+		if(query === this.state.query){
+		  BooksAPI.search(query)
+		  .then(books => {
+			books.map(book => {
+			  book.shelf = 'none'
+			  this.props.booksOnShelf.forEach(bookOnShelf => {
+				book.id === bookOnShelf.id && (
+				  book.shelf = bookOnShelf.shelf
+				)
+			  })
+			})
+			this.setState({
+			  books: books,
+			  searchError: false
+			})
+		  })
+		  .catch(error => {
+			this.setState({
+			  books: [],
+			  searchError: true
+			})
+			console.log(this.state.searchError)
+		  })
+		}
     }
   }
 
